@@ -17,4 +17,6 @@ public interface IHotelService extends IService<Hotel> {
     void deleteById(Long id);
 
     void insertById(Long id);
+
+    String submitData(String token, String data);
 }

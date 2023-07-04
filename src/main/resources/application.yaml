@@ -12,6 +12,13 @@ spring:
     port: 5672
     username: guest
     password: guest
+  redis:
+    host: ${ipAddress}
+    port: 6379
+    password: 990416
+    database: 0
+    timeout: 1800000
+
 logging:
   level:
     cn.itcast: debug

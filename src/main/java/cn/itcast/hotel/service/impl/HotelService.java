@@ -170,6 +170,11 @@ public class HotelService extends ServiceImpl<HotelMapper, Hotel> implements IHo
         }
     }
 
+    @Override
+    public String submitData(String token, String data) {
+        return null;
+    }
+
     private void buildAggregation(SearchRequest request) {
         request.source().aggregation(AggregationBuilders
                 .terms("brandAgg")
