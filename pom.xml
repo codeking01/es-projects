@@ -84,6 +84,7 @@
     </dependencies>
 
     <build>
+        <finalName>hotel-demo</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

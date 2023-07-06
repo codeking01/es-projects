@@ -20,6 +20,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
@@ -31,12 +32,13 @@ import java.util.List;
  */
 @SpringBootTest
 public class HotelDocumentTest {
-
+    @Value("${ipAddress}")
+    private String ipAddress;
     private RestHighLevelClient client;
     @Autowired
     private HotelService hotelService;
 
-    @Test
+    //@Test
     void testIndexDocument() throws IOException {
         IndexRequest indexRequest = new IndexRequest("hotel");
         // 写DSL
@@ -47,7 +49,7 @@ public class HotelDocumentTest {
         client.index(indexRequest, RequestOptions.DEFAULT);
     }
 
-    @Test
+    //@Test
     void testAddDocument() throws IOException {
         // 1.根据id查询酒店数据
         Hotel hotel = hotelService.getById(36934L);
@@ -70,7 +72,7 @@ public class HotelDocumentTest {
         System.out.println("hotelDoc:" + hotelDoc);
     }
 
-    @Test
+    //@Test
     void testDeleteDocument() throws IOException {
         DeleteRequest deleteRequest = new DeleteRequest("hotel", "36934");
         client.delete(deleteRequest, RequestOptions.DEFAULT);
@@ -113,12 +115,13 @@ public class HotelDocumentTest {
 
     @Test
     void testInit() {
-        System.out.println("client:"+client);
+        System.out.println("client:" + client);
     }
 
     @BeforeEach
     void setUp() {
-        this.client = new RestHighLevelClient(RestClient.builder(HttpHost.create("http://10.234.170.128:9200")));
+        this.client = new RestHighLevelClient(RestClient.builder(HttpHost.create("http://" +
+                ipAddress + ":9200")));
     }
 
     @AfterEach

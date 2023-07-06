@@ -1,0 +1,11 @@
+version: "3"
+services:
+  # 定义 Spring Boot 应用程序所需要的服务（容器）
+  hodel-image:
+    # 构建镜像的路径。"." 表示 Dockerfile 文件所在的当前目录
+    build: .
+    # 指定容器名称
+    container_name: hotel-demo-container
+    # 容器所要使用的端口号
+    ports:
+      - "8089:8089"

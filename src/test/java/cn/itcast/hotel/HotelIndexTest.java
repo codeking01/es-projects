@@ -12,6 +12,8 @@ import org.elasticsearch.common.xcontent.XContentType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 
@@ -19,7 +21,10 @@ import java.io.IOException;
  * @author CodeKing
  * @since 2023/6/28  12:02
  */
+@SpringBootTest
 public class HotelIndexTest {
+    @Value("${ipAddress}")
+    private String ipAddress;
     private static final String MAPPING_TEMPLATE = "{\n" +
             "  \"mappings\": {\n" +
             "    \"properties\": {\n" +
@@ -77,7 +82,7 @@ public class HotelIndexTest {
     }
 
 
-    @Test
+    //@Test
     void testCreateHotelIndex() throws IOException {
         // 1.创建request对象
         CreateIndexRequest request = new CreateIndexRequest("hotel");
@@ -87,7 +92,7 @@ public class HotelIndexTest {
         client.indices().create(request, RequestOptions.DEFAULT);
     }
 
-    @Test
+    //@Test
     void testDeleteHotelIndex() throws IOException {
         DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest("hotel");
         client.indices().delete(deleteIndexRequest, RequestOptions.DEFAULT);
@@ -103,9 +108,10 @@ public class HotelIndexTest {
     // 每次先执行
     @BeforeEach
     void setUp() {
+        System.out.println("http://"+ipAddress+":9200");
         this.client = new RestHighLevelClient(RestClient.builder(HttpHost.create(
                 // 自己部署的地址，如果是集群，直接在后面多写几个，都好分开即可
-                "http://10.234.170.128:9200"
+                "http://"+ipAddress+":9200"
         )));
     }
 

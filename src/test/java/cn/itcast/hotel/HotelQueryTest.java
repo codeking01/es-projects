@@ -17,6 +17,9 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
@@ -26,7 +29,10 @@ import java.util.Map;
  * @author CodeKing
  * @since 2023/7/3  17:37
  */
+@SpringBootTest
 public class HotelQueryTest {
+    @Value("${ipAddress}")
+    private String ipAddress;
     private RestHighLevelClient client;
 
     @Test
@@ -132,7 +138,8 @@ public class HotelQueryTest {
 
     @BeforeEach
     void setUp() {
-        this.client = new RestHighLevelClient(RestClient.builder(HttpHost.create("http://10.234.170.128:9200")));
+        this.client = new RestHighLevelClient(RestClient.builder(HttpHost.create("http://"+
+                ipAddress+":9200")));
     }
 
     @AfterEach
